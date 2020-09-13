@@ -6,8 +6,8 @@ export default function Layout(props){
   const { bindMove } = React.useContext(SpringContext)
 
   return(
-    <div {...bindMove()} style={{width:"100vw", height:"100vh", backgroundColor:"lightblue"}}>
+    <div {...bindMove()} style={{width:"100vw", height:"100vh", maxWidth:"100%", maxHeight:"100%", backgroundColor:"lightblue"}}>
       <Header/>
-      <div style={{height:"100%"}}>{props.children}</div>
+      <div>{props.children}</div>
     </div>)
 }

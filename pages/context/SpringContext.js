@@ -5,24 +5,16 @@ export const SpringContext = React.createContext()
 
 const SpringContextProvider = (props) => {
 
-  const slow = { mass: 10, tension: 200, friction: 50 }
-
-  const [{ mousePos }, set] = useSpring(() => ({ mousePos: [0,0], config:slow }))
-
-  //const [ mousePosState, setmousePosState ] = React.useState('')
+  const [{ mousePos }, set] = useSpring(() => ({ mousePos: [0,0] }))
 
   const bindMove = useGesture({
     onMouseMove: ( {clientX, clientY} ) => {
       set({mousePos: [clientX, clientY]})
-      //set({mousePos: xy})
-      //setmousePosState(`mouse position is x:${clientX} y:${clientY}`)
     },
+    onClick: ( {clientX, clientY} ) => {
+      console.log('X:',clientX,'Y:',clientY)
+    }
   })
-
-  // React.useEffect(() => {
-  //   console.log('mouse pos updated to ', mousePosState)
-  // },[mousePosState])
-
   return (<SpringContext.Provider value={{bindMove ,mousePos}}>
     {props.children}
   </SpringContext.Provider>)
