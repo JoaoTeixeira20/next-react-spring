@@ -3,13 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --hostname 0.0.0.0",
     "build": "next build",
-    "start": "next start"
+    "start": "next start --hostname 0.0.0.0",
+    "prod": "next export"
   },
   "dependencies": {
     "next": "9.5.3",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "react-spring": "^9.0.0-rc.3",
+    "react-use-gesture": "^7.0.16",
+    "vec-la": "^1.5.0"
+  },
+  "resolutions": {
+    "webpack": "~4.43.0"
   }
 }
