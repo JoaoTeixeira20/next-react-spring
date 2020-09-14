@@ -1,30 +1,34 @@
 import Layout from '../components/main/Layout';
-import { useSpring, animated, to } from 'react-spring';
-import { useGesture } from 'react-use-gesture';
+import { useSpring, animated } from 'react-spring';
 
 export default function SpringWithoutContextExample(){
 
-  const [{ mousePos }, set] = useSpring(() => ({ mousePos: [0,0] }))
+  const [{ mousePosition }, set] = useSpring(() => ({ mousePosition: [0,0] }))
 
-  //const [ mousePosState, setmousePosState ] = React.useState('')
-
-  const bind = useGesture({
-    onMouseMove: ( {clientX, clientY} ) => {
-      set({mousePos: [clientX, clientY]})
+  const moveBall = event => {
+    const x = event.clientX;
+    const y = event.clientY
+    set({mousePosition: [x, y]})
       //set({mousePos: xy})
-      console.log(`mouse position is x:${clientX} y:${clientY}`)
-    },
-  })
+    console.log(`mouse position is x:${x} y:${y}`)
+  }
 
   return (<Layout>
-    <div {...bind()} style={{width:"100%", height:"100%", minWidth:"100%", minHeight:"100%"}}></div>
+    <div onMouseMove={moveBall} style={{width:"100vw", height:"100vh"}}></div>
     <animated.div  style={{
+      transform: mousePosition.to((x,y) => `translate3D(${x}px, ${y}px, 0) translate3D(-50%, -50%, 0)`),
       width:"100px",
       height:"100px",
       borderRadius:"50px",
       border:"1px solid black",
-      transform: mousePos.to((x,y) => `translate3D(${x}px, ${y}px, 0) translate3D(-50%, -50%, 0)`)
-    }}>yo</animated.div>
+      position:"absolute",
+      left:0,
+      top:0,
+      pointerEvents:"none",
+      display:"flex",
+      justifyContent:"center",
+      alignItems:"center"
+    }}>{mousePosition.to((x,y) => `x:${x.toFixed(0)},y:${y.toFixed(0)}`)}</animated.div>
   </Layout>)
 
 }

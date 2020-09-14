@@ -42,7 +42,7 @@ export default function Example(){
     <React.Fragment>
       <div style={{position:"absolute",left:"50%", top:"50%", transform:`translate(-50%,-50%)`}}>
       <OffsetExample/>
-        <animated.div style={props}>{props.number}</animated.div>
+        <animated.div style={props}>{props.number.to(number => number.toFixed(5))}</animated.div>
         <button onClick={toggleNumberVisibility}>toggle me</button>
         <animated.div {...bind()} style={{x, y, scale, backgroundColor:"lime", touchAction:"none"}}>drag me</animated.div>
       </div>
