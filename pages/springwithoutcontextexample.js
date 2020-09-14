@@ -1,4 +1,4 @@
-import Layout from './components/main/Layout';
+import Layout from '../components/main/Layout';
 import { useSpring, animated, to } from 'react-spring';
 import { useGesture } from 'react-use-gesture';
 
@@ -17,7 +17,7 @@ export default function SpringWithoutContextExample(){
   })
 
   return (<Layout>
-    <div {...bind()} style={{width:"100%", height:"100%"}}></div>
+    <div {...bind()} style={{width:"100%", height:"100%", minWidth:"100%", minHeight:"100%"}}></div>
     <animated.div  style={{
       width:"100px",
       height:"100px",

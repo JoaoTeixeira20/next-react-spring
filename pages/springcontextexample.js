@@ -1,6 +1,6 @@
 import { animated, to } from 'react-spring';
-import Layout from './components/main/Layout';
-import { SpringContext } from './context/SpringContext';
+import Layout from '../components/main/Layout';
+import { SpringContext } from '../context/SpringContext';
 //import { useResizeObserver } from 'use-resize-observer';
 
 export default function SpringContextExample(){
