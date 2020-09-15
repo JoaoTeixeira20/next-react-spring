@@ -27,7 +27,7 @@ export default function Parallax(){
   }
 
   return (
-    <Layout>
+    <>
       <animated.div style={{...tilesStyle,
         transform: mousePos.to((x,y) => parallax(x,y,0)),
       }}>mid parallax</animated.div>
@@ -43,6 +43,6 @@ export default function Parallax(){
         transform: mousePos.to((x,y) => parallax(x,y,200)),
         borderRadius:"50%",
       }}>front parallax</animated.div>
-    </Layout>
+    </>
   )
 }

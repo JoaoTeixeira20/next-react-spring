@@ -1,5 +1,4 @@
 import { animated, to, useSpring } from 'react-spring';
-import Layout from '../components/main/Layout';
 import { SpringContext } from '../context/SpringContext';
 //import { useResizeObserver } from 'use-resize-observer';
 
@@ -44,7 +43,7 @@ export default function SpringContextExample(){
     setrectanglePosition({rectanglePosition : [x, y]})
   }
 
-  return(<Layout> 
+  return(<>
   <animated.div style={{
     position:"absolute",
     right:0,
@@ -84,5 +83,5 @@ export default function SpringContextExample(){
   <div style={{position:"absolute", left:"50%", top:"90%"}}>
     <button onClick={changePos}>Change me</button>
   </div>
-  </Layout>)
+  </>)
 }

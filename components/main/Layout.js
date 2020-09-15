@@ -1,6 +1,5 @@
 import { SpringContext } from '../../context/SpringContext'
 import { animated } from 'react-spring'
-import Header from './Header'
 import { useRouter } from 'next/router'
 
 export default function Layout(props){
@@ -29,7 +28,6 @@ export default function Layout(props){
         left:0,
         top:0,
         pointerEvents:"none"}}/>)}
-      <Header/>
       <div>{props.children}</div>
     </div>)
 }

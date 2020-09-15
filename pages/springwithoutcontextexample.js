@@ -1,4 +1,3 @@
-import Layout from '../components/main/Layout';
 import { useSpring, animated } from 'react-spring';
 
 export default function SpringWithoutContextExample(){
@@ -13,7 +12,8 @@ export default function SpringWithoutContextExample(){
     console.log(`mouse position is x:${x} y:${y}`)
   }
 
-  return (<Layout>
+  return (
+    <>
     <div onMouseMove={moveBall} style={{width:"100vw", height:"100vh"}}></div>
     <animated.div  style={{
       transform: mousePosition.to((x,y) => `translate3D(${x}px, ${y}px, 0) translate3D(-50%, -50%, 0)`),
@@ -29,6 +29,6 @@ export default function SpringWithoutContextExample(){
       justifyContent:"center",
       alignItems:"center"
     }}>{mousePosition.to((x,y) => `x:${x.toFixed(0)},y:${y.toFixed(0)}`)}</animated.div>
-  </Layout>)
+    </>)
 
 }
