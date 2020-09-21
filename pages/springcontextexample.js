@@ -80,7 +80,7 @@ export default function SpringContextExample(){
     height:"10px",
     transform:"translate3D(-50%,-50%,0) rotate(0deg)"
   }}></animated.div>
-  <div style={{position:"absolute", left:"50%", top:"90%"}}>
+  <div style={{position:"absolute", left:"50%", top:"80%"}}>
     <button onClick={changePos}>Change me</button>
   </div>
   </>)
