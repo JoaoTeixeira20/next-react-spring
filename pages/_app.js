@@ -3,7 +3,7 @@ import App from 'next/app'
 import SpringContextProvider from '../context/SpringContext'
 import '../styles/globals.css'
 import Layout from '../components/main/Layout'
-import { Transition, animated } from "react-spring";
+import { Transition, animated, config as springConfig } from "react-spring";
 
 class MyApp extends App {
 
@@ -32,6 +32,7 @@ class MyApp extends App {
             <Transition
               items={items}
               keys={(item) => item.id}
+              config={springConfig.wobbly}
               initial={{
                 opacity: 0,
                 transform: "translate3D(0%, 0%, 0) rotate(0deg)"
