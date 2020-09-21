@@ -8,21 +8,19 @@ export default function SpringContextExample(){
 
   const [ RectState, setRectState ] = React.useState({x:0,y:0})
 
-  const [ RectYAxisCompensation, setRectYAxisCompensation ] = React.useState(0)
-
-  const [ { rectanglePosition }, setrectanglePosition ] = useSpring(() => (
-    {rectanglePosition: [0, 0]}
+  const [ { rectanglePosition, RectYAxisCompensation }, setrectanglePosition ] = useSpring(() => (
+    {rectanglePosition: [0, 0],
+    RectYAxisCompensation: 0}
     ))
 
   const containerRef = React.useRef()
 
   const angleCenterAndPoint = ((cx, cy, px, py) => Math.atan2(py - cy, px - cx) * 180 / Math.PI)
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     const p1 = new ResizeObserver(() => { 
-      setTimeout(() => setRectYAxisCompensation(containerRef.current.getBoundingClientRect().y),1000)
+      setTimeout(() => setrectanglePosition({RectYAxisCompensation:containerRef.current.getBoundingClientRect().y}),1000)
     })
-    console.log(containerRef.current.getBoundingClientRect().y)
     p1.observe(containerRef.current)
     return () => {
       p1.unobserve(containerRef.current)
@@ -44,7 +42,7 @@ export default function SpringContextExample(){
     right:0,
     top:0,
     color:"red",
-    transform: mousePos.to((_,y) => `translate3D(0, ${y - RectYAxisCompensation}px, 0) translate3D(-50%, -50%, 0)`),
+    transform: to([mousePos,RectYAxisCompensation],([_,y],RectY) => `translate3D(0, ${y - RectY}px, 0) translate3D(-50%, -50%, 0)`),
   }}
   >Y</animated.div>
   <animated.div style={{
@@ -60,7 +58,7 @@ export default function SpringContextExample(){
     top: rectanglePosition.to((_,top) => `${top}px`),
     left: rectanglePosition.to((left,_) => `${left}px`),
     transformOrigin: "0 50% 0",
-    transform: to([mousePos,rectanglePosition], ([x,y],[left,top]) => `translate3D(0%,-50%,0) rotate(${angleCenterAndPoint(left, top, x, y - RectYAxisCompensation)}deg)`),
+    transform: to([mousePos,rectanglePosition,RectYAxisCompensation], ([x,y],[left,top],YComp) => `translate3D(0%,-50%,0) rotate(${angleCenterAndPoint(left, top, x, y - YComp)}deg)`),
     border:"1px solid green",
     width:"30%",
     height:"10%",
