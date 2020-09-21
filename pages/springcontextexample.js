@@ -8,31 +8,23 @@ export default function SpringContextExample(){
 
   const [ RectState, setRectState ] = React.useState({x:0,y:0})
 
+  const [ RectYAxisCompensation, setRectYAxisCompensation ] = React.useState(0)
+
   const [ { rectanglePosition }, setrectanglePosition ] = useSpring(() => (
     {rectanglePosition: [0, 0]}
     ))
 
-  const rectangleRef = React.useRef()
+  const containerRef = React.useRef()
 
   const angleCenterAndPoint = ((cx, cy, px, py) => Math.atan2(py - cy, px - cx) * 180 / Math.PI)
 
-  // React.useEffect(() => {
-  //   const resizeObject = () => {
-  //     //console.log('width', rectangleRef.current.getBoundingClientRect().width)
-  //     //console.log('height', rectangleRef.current.getBoundingClientRect().height)
-  //     //console.log('yo i got resized')
-  //     //const y = rectangleRef.current.getBoundingClientRect().top + (rectangleRef.current.getBoundingClientRect().height/2)
-  //     //const x = rectangleRef.current.getBoundingClientRect().left + (rectangleRef.current.getBoundingClientRect().width/2)
-  //     const y = window.innerHeight / 2
-  //     const x = 0
-  //     setrectanglePosition({x:x,y:y})
-  //     //console.log(rectangleRef.current.getBoundingClientRect())
-  //   }
-  //   //const p1 = new ResizeObserver(resizeObject)
-  //   //p1.observe(rectangleRef.current)
-  //   //return () => p1.unobserve(rectangleRef.current)
-  //   resizeObject()
-  // },[])
+  React.useEffect(() => {
+    const p1 = new ResizeObserver(() => {
+      setRectYAxisCompensation(containerRef.current.getBoundingClientRect().y)
+    })
+    p1.observe(containerRef.current)
+    return () => p1.unobserve(containerRef.current)
+  },[])
 
   const changePos = () => {
     let y = RectState.x
@@ -43,13 +35,13 @@ export default function SpringContextExample(){
     setrectanglePosition({rectanglePosition : [x, y]})
   }
 
-  return(<>
+  return(<div ref={containerRef}>
   <animated.div style={{
     position:"absolute",
     right:0,
     top:0,
     color:"red",
-    transform: mousePos.to((x,y) => `translate3D(0, ${y}px, 0) translate3D(-50%, -50%, 0)`),
+    transform: mousePos.to((_,y) => `translate3D(0, ${y - RectYAxisCompensation}px, 0) translate3D(-50%, -50%, 0)`),
   }}
   >Y</animated.div>
   <animated.div style={{
@@ -57,15 +49,15 @@ export default function SpringContextExample(){
     left:0,
     bottom:0,
     color:"red",
-    transform: mousePos.to((x,y) => `translate3D(${x}px, 0, 0) translate3D(-50%, -50%, 0)`),
+    transform: mousePos.to((x,_) => `translate3D(${x}px, 0, 0) translate3D(-50%, -50%, 0)`),
   }}
   >X</animated.div>
-  <animated.div ref={rectangleRef} style={{
+  <animated.div style={{
     position:"absolute",
-    top: rectanglePosition.to((left,top) => `${top}px`),
-    left: rectanglePosition.to((left,top) => `${left}px`),
+    top: rectanglePosition.to((_,top) => `${top}px`),
+    left: rectanglePosition.to((left,_) => `${left}px`),
     transformOrigin: "0 50% 0",
-    transform: to([mousePos,rectanglePosition], ([x,y],[left,top]) => `translate3D(0%,-50%,0) rotate(${angleCenterAndPoint(left, top, x, y)}deg)`),
+    transform: to([mousePos,rectanglePosition], ([x,y],[left,top]) => `translate3D(0%,-50%,0) rotate(${angleCenterAndPoint(left, top, x, y - RectYAxisCompensation)}deg)`),
     border:"1px solid green",
     width:"30%",
     height:"10%",
@@ -74,8 +66,8 @@ export default function SpringContextExample(){
   <animated.div style={{
     position:"absolute",
     border:"1px solid black",
-    top: rectanglePosition.to((left,top) => `${top}px`),
-    left: rectanglePosition.to((left,top) => `${left}px`),
+    top: rectanglePosition.to((_,top) => `${top}px`),
+    left: rectanglePosition.to((left,_) => `${left}px`),
     width:"10px",
     height:"10px",
     transform:"translate3D(-50%,-50%,0) rotate(0deg)"
@@ -83,5 +75,5 @@ export default function SpringContextExample(){
   <div style={{position:"absolute", left:"50%", top:"80%"}}>
     <button onClick={changePos}>Change me</button>
   </div>
-  </>)
+  </div>)
 }
