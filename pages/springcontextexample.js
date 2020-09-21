@@ -18,12 +18,15 @@ export default function SpringContextExample(){
 
   const angleCenterAndPoint = ((cx, cy, px, py) => Math.atan2(py - cy, px - cx) * 180 / Math.PI)
 
-  React.useEffect(() => {
-    const p1 = new ResizeObserver(() => {
-      setRectYAxisCompensation(containerRef.current.getBoundingClientRect().y)
+  React.useLayoutEffect(() => {
+    const p1 = new ResizeObserver(() => { 
+      setTimeout(() => setRectYAxisCompensation(containerRef.current.getBoundingClientRect().y),1000)
     })
+    console.log(containerRef.current.getBoundingClientRect().y)
     p1.observe(containerRef.current)
-    return () => p1.unobserve(containerRef.current)
+    return () => {
+      p1.unobserve(containerRef.current)
+    }
   },[])
 
   const changePos = () => {
