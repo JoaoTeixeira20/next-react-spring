@@ -24,9 +24,9 @@ export default function Layout(){
   };
 
   const transition = useTransition(items[index], {
-    from: { opacity: 0, transform: 'translate3d(50%,0,0) translate3D(-50%, -50%, 0) rotate(-45deg)' },
-    enter: { opacity: 1, transform: 'translate3d(0%,0,0) translate3D(-50%, -50%, 0) rotate(45deg)' },
-    leave: { opacity: 0, transform: 'translate3d(-50%,0,0) translate3D(-50%, -50%, 0) scale(0deg)' },
+    from: { opacity: 0, transform: 'translate3D(0%, -50%, 0) rotate(-45deg)' },
+    enter: { opacity: 1, transform: 'translate3D(-50%, -50%, 0) rotate(45deg)' },
+    leave: { opacity: 0, transform: 'translate3D(-100%, -50%, 0) scale(0deg)' },
     config: config.stiff
   });
 
